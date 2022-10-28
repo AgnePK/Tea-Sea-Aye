@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+// use App\Http\Requests\StoreTeaRequest;   
 use Illuminate\Support\Str;
 
 
@@ -40,7 +41,8 @@ class TeaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $tea_img = $request->file('tea_img');
+        // $path = $tea_img->storeAs('public/images', $filename);
     }
 
     /**

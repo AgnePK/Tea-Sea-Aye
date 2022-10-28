@@ -21,6 +21,7 @@
                     <button type="submit" class="btn btn-danger ml-4" onclick="return confirm('Are you sure you wish to delete this tea?')">Delete tea</button>
             </div>
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
+                <img src="{{ asset('storage/images/lyons_tea.jpeg') }}" width="150">
                 <h2 class="font-bold text-4xl">
                     {{ $tea->name }}
                 </h2>
