@@ -16,13 +16,14 @@ return new class extends Migration
         // my tea shop will have the following attributes. 
         Schema::create('teas', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->string('name');
             $table->string('brand');
             $table->text('description');
             $table->decimal('price');
             $table->string('tea_img');
-            // in CA2 this will be an integer, the Author ID, a foreign key from the Author table.
             $table->string('location');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('teas');
     }
 };

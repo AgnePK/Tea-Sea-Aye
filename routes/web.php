@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TeaController;
+use Database\Seeders\TeaSeeder;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +19,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+// Route::get('/index', function () {
+//     return view('teas.index');
+// })->middleware(['auth', 'verified'])->name('index');
+
+// Route::get('/show', function () {
+//     return view('teas.show');
+// })->middleware(['auth', 'verified'])->name('show');
+
+
+//makes routes automatically for all pages
+Route::resource('/teas', TeaController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';
