@@ -18,10 +18,12 @@ class TeaFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
+            'uuid' => $this->faker->uuid(),
             'brand' => $this->faker->text(5),
             'description' => $this->faker->text(200),
-            'price' => $this->faker->randomFloat(2, 10, 15),
+            'price' => $this->faker->randomFloat(2, 10, 15), 
             'tea_img' => "public/images/lyons_tea.jpeg",
+            'user_id'=> '1',
             'location' => $this->faker->text(10),
         ];
     }
