@@ -7,14 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            {{-- <x-alert-success>
+            <x-alert-success>
                 {{session('success')}}
-            </x-alert-success> --}}
+            </x-alert-success>
             <a href="{{ route('teas.create') }}" class="btn-link btn-lg mb-2">+ New tea</a>
             @forelse ($teas as $tea)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg flex">
                     <div class="mr-6">
-                        <img src="{{ asset('storage/images/lyons_tea.jpeg') }}" width="160">
+                        <img src="{{ asset('storage/images/' . $tea->tea_img) }}" width="160">
                     </div>
                     <div>
                         <div class="flex">

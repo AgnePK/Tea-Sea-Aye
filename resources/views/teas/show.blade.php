@@ -7,6 +7,9 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-alert-success>
+                {{session('success')}}
+            </x-alert-success>
             <div class="flex">
                 <p class="opacity-70">
                     <strong>Created: </strong> {{ $tea->created_at->diffForHumans() }}
@@ -23,11 +26,11 @@
 
 
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg flex">
-                <div>
+                <div class="">
                     <h2 class="font-bold text-4xl">
                         {{ $tea->name }}
                     </h2>
-                    <img class="border-b border-gray-400 shadow-lg sm:rounded-lg mt-5" src="{{ asset('storage/images/lyons_tea.jpeg') }}" width="250">
+                    <img class="border-b border-gray-400 shadow-lg sm:rounded-lg mt-5" src="{{ asset('storage/images/' . $tea->tea_img) }}" width="250">
                 </div>
 
                 <div class="ml-6">
