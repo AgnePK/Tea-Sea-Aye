@@ -42,15 +42,16 @@
                         :value="@old('description')">
                     </x-textarea>
 
-                    <div class="mt-6">
-                        <label for="price">Price (between €1 and €15):</label>
-                        <input type="number"
-                            name="price"
-                            min="1" 
-                            max="15"
-                            :value="@old('price')">
-                    </div> 
-                    {{-- could i put this in as a varchar and verify it as numbers/decimals? --}}
+                    <p class="mt-6">Price:</p>
+                    <x-text-input
+                        type="decimal"
+                        name="price"
+                        field="price"
+                        placeholder="price"
+                        class="w-auto font-serif text-xl"
+                        autocomplete="off"
+                        :value="@old('price', $tea->price)">
+                    </x-text-input>
      
                     <x-file-input
                         type="file"
