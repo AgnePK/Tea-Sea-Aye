@@ -22,6 +22,9 @@
                         autocomplete="off"
                         :value="@old('name', $tea->name)">
                     </x-text-input>
+                    @error('name')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                    @enderror
 
                     <p class="mt-6">Brand that makes the tea:</p>
                     <x-text-input
@@ -33,6 +36,9 @@
                         autocomplete="off"
                         :value="@old('brand', $tea->brand)">
                     </x-text-input>
+                    @error('brand')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                    @enderror
 
                     <p class="mt-6">Describe the tea:</p>
                     <x-textarea
@@ -44,16 +50,20 @@
                         :value="@old('description', $tea->description)">
                     </x-textarea>
 
+
                     <p class="mt-6">Price:</p>
                     <x-text-input
                         type="decimal"
                         name="price"
                         field="price"
-                        placeholder="price"
+                        placeholder="€00.00"
                         class="w-auto font-serif text-xl"
                         autocomplete="off"
                         :value="@old('price', $tea->price)">
                     </x-text-input>
+                    @error('price')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                    @enderror
      
                     <x-file-input
                         type="file"
@@ -73,6 +83,9 @@
                         autocomplete="off"
                         :value="@old('location', $tea->location)">
                     </x-text-input>
+                    @error('location')
+                    <div class="text-red-600 text-sm">{{ $message }}</div>
+                    @enderror
 
                     <x-primary-button class="mt-6">Save tea</x-primary-button>
                 </form>
