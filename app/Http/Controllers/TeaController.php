@@ -49,7 +49,7 @@ class TeaController extends Controller
             'brand' => 'required|max:50',
             'description' => 'required|max:500',
             'price' => 'required|max:15',
-            'tea_img' => 'file|image|dimensions:width=250,height=250',
+            'tea_img' => 'file|image',
             'location' => 'required|max:120'
         ]);
         $tea_img = $request->file('tea_img');
@@ -120,7 +120,7 @@ class TeaController extends Controller
             'brand' => 'required|max:50',
             'description' => 'required|max:500',
             'price' => 'required|max:15',
-            'tea_img' => 'file|image|dimensions:width=250,height=250',
+            'tea_img' => 'file|image',
             'location' => 'required|max:120'
         ]);    
         $tea_img = $request->file('tea_img');
