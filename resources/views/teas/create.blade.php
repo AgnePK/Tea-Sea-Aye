@@ -47,10 +47,10 @@
                         type="decimal"
                         name="price"
                         field="price"
-                        placeholder="price"
+                        placeholder="€00.00"
                         class="w-auto font-serif text-xl"
                         autocomplete="off"
-                        :value="@old('price', $tea->price)">
+                        :value="@old('price')">
                     </x-text-input>
      
                     <x-file-input

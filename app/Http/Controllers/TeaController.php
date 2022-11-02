@@ -147,8 +147,15 @@ class TeaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tea $tea)
     {
-        //
+        if($tea->user_id != Auth::id()) {
+            return abort(403);
+        }
+
+        $tea->delete();
+
+        return to_route('teas.index', $tea)->with('success','Tea deleted successfully');
+    
     }
 }
