@@ -10,6 +10,7 @@
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
                 <form action="{{ route('teas.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <h2 class=" mb-10 text-4xl">Create your Tea</h2>
                     <p>Name of tea:</p>
                     <x-text-input
                         type="text"
