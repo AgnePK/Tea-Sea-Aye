@@ -85,7 +85,7 @@ class TeaController extends Controller
      */
     public function show(Tea $tea)
     {
-        $tea = Tea::where('id', $tea->id)->where('user_id',Auth::id())->firstOrFail();
+        $tea = Tea::where('uuid', $tea->uuid)->where('user_id',Auth::id())->firstOrFail();
         return view('teas.show')->with('tea', $tea);
     }
 
