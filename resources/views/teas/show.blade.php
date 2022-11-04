@@ -30,7 +30,7 @@
                     <h2 class="font-bold text-4xl">
                         {{ $tea->name }}
                     </h2>
-                    <img class="border-b border-gray-400 shadow-lg sm:rounded-lg mt-5" src="{{ asset('storage/images/' . $tea->tea_img) }}" width="250">
+                    <img class="border-b border-gray-400 shadow-lg sm:rounded-lg mt-5" src="{{ asset('storage/images/' . $tea->tea_img) }}" width="350">
                 </div>
 
                 <div class="ml-6">
