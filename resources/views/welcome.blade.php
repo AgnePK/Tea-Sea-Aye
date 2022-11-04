@@ -35,7 +35,7 @@
                     @endauth
                 </div>
             @endif
-            <h1 class="text-5xl">LiteNotes</h1>
+            <h1 class="text-5xl">Teas</h1>
         </div>
     </body>
 </html>
