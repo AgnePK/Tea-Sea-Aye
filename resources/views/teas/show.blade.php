@@ -23,7 +23,7 @@
                     @csrf
                     <button type="submit" class="btn btn-danger ml-4" onclick="return confirm('Are you sure you wish to delete this tea?')">Delete tea</button>
             </div>
-
+            
 
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg flex">
                 <div class="">

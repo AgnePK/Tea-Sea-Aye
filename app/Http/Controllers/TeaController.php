@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreTeaRequest;   
+use App\Http\Requests\StoreTeaRequest;
 use Illuminate\Support\Str;
 
 
@@ -133,9 +133,9 @@ class TeaController extends Controller
             'name' => $request->name,
             'brand' => $request->brand,
             'description' => $request->description,
-            'price' => $request-> price,
+            'price' => $request->price,
             'tea_img' =>$filename,
-            'location' => $request-> location
+            'location' => $request->location
         ]);
 
         return to_route('teas.show', $tea)->with('success','Tea updated successfully');
