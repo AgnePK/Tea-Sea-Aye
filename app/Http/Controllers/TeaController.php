@@ -85,6 +85,7 @@ class TeaController extends Controller
      */
     public function show(Tea $tea)
     {
+        // the uuid here is just calling each tea by their uuid instead of id, and then checks if the user is autherised.
         $tea = Tea::where('uuid', $tea->uuid)->where('user_id',Auth::id())->firstOrFail();
         return view('teas.show')->with('tea', $tea);
     }
@@ -123,12 +124,14 @@ class TeaController extends Controller
             'tea_img' => 'file|image',
             'location' => 'required|max:120'
         ]);    
+        // the bottom 4 lines of code is for adding an image
         $tea_img = $request->file('tea_img');
         $extention = $tea_img->getClientOriginalExtension();
 
         $filename = date('d-m-Y') . '_' . $request->input('name') . '.'. $extention;
 
         $path = $tea_img->storeAs('public/images', $filename);
+        // This code updates/changes the info to whatever the user put in and saves it in the DB.
         $tea->update([
             'name' => $request->name,
             'brand' => $request->brand,
@@ -152,7 +155,7 @@ class TeaController extends Controller
         if($tea->user_id != Auth::id()) {
             return abort(403);
         }
-
+        // This takes the tea and deletes it from the DB entirely
         $tea->delete();
 
         return to_route('teas.index', $tea)->with('success','Tea deleted successfully');
