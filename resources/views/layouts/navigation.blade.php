@@ -15,6 +15,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    {{-- i added this extra button here so its easier for me to navigate back to my main teas page. --}}
                     <x-nav-link :href="route('teas.index')">
                         {{ __('Teas') }}
                     </x-nav-link>

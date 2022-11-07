@@ -16,6 +16,7 @@ class TeaFactory extends Factory
      */
     public function definition()
     {
+        // Using faker to populate my DB with random data.
         return [
             'name' => $this->faker->word,
             'uuid' => $this->faker->uuid(),

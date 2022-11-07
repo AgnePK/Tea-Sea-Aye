@@ -14,6 +14,7 @@ class TeaSeeder extends Seeder
      * @return void
      */
     public function run()
+    // telling it to insert 10 rows of data into my db using the TeaFactory.
     {
         Tea::factory()->times(10)->create();
     }
