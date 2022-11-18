@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\TeaController;
+use App\Http\Controllers\Admin\TeaController as AdminTeaController;
+use App\Http\Controllers\User\TeaController as UserTeaController;
 use Database\Seeders\TeaSeeder;
 use Illuminate\Support\Facades\Route;
 
@@ -33,8 +34,15 @@ Route::get('/dashboard', function () {
 //     return view('teas.show');
 // })->middleware(['auth', 'verified'])->name('show');
 
+require __DIR__ . '/auth.php';
 
 //makes routes automatically for all pages
 Route::resource('/teas', TeaController::class)->middleware(['auth']);
 
-require __DIR__.'/auth.php';
+
+
+// This will create all the routes for Tea
+Route::resource('/admin/teas', AdminTeaController::class)->middleware(['auth'])->names('admin.teas');
+
+// and the routes will only be available when a user is logged in
+Route::resource('/user/teas', UserTeaController::class)->middleware(['auth'])->names('user.teas')->only(['index', 'show']);

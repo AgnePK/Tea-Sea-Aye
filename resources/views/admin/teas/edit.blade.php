@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
-                <form action="{{ route('teas.update', $tea) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.teas.update', $tea) }}" method="post" enctype="multipart/form-data">
                     @method('put') {{-- This line of code lets the developer use the old info and fills in the textfields with the old info. But it also allows to edit it --}}
                     @csrf
                     <h2 class=" mb-10 text-4xl">Update your Tea</h2>

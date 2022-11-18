@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreTeaRequest;
 use Illuminate\Support\Str;
 
 
@@ -18,10 +18,13 @@ class TeaController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
         //This will show all the teas i have in the DB, it will show them by the latest update (recent first) and only show max 5 on page 1
-        $teas = Tea::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
-        // dd($teas);
-        return view('teas.index')->with('teas', $teas);
+        // $teas = Tea::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
+        $teas = Tea::paginate(5);
+
+        return view('admin.teas.index')->with('teas', $teas);
     }
 
     /**
@@ -31,8 +34,10 @@ class TeaController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
         //directs click to the create.blade.php page
-        return view('teas.create');
+        return view('admin.teas.create');
     }
 
     /**
@@ -43,6 +48,8 @@ class TeaController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
         //validating all the input fields and adding custom lengths
         $request->validate([
             'name' => 'required|max:50',
@@ -56,7 +63,7 @@ class TeaController extends Controller
         $extention = $tea_img->getClientOriginalExtension();
 
         //Changed the date formar to day-month-year
-        $filename = date('d-m-Y') . '_' . $request->input('name') . '.'. $extention;
+        $filename = date('d-m-Y') . '_' . $request->input('name') . '.' . $extention;
 
         //saying where to store the new images 
         $path = $tea_img->storeAs('public/images', $filename);
@@ -73,7 +80,7 @@ class TeaController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return to_route('teas.index')->with('success','Note created successfully');
+        return to_route('admin.teas.index')->with('success', 'Note created successfully');
         // the "with" part makes a pop up notification to alert the user that they have successfully created a tea. 
     }
 
@@ -85,9 +92,11 @@ class TeaController extends Controller
      */
     public function show(Tea $tea)
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
         // the uuid here is just calling each tea by their uuid instead of id, and then checks if the user is autherised.
-        $tea = Tea::where('uuid', $tea->uuid)->where('user_id',Auth::id())->firstOrFail();
-        return view('teas.show')->with('tea', $tea);
+        $tea = Tea::where('uuid', $tea->uuid)->where('user_id', Auth::id())->firstOrFail();
+        return view('admin.teas.show')->with('tea', $tea);
     }
 
     /**
@@ -98,10 +107,12 @@ class TeaController extends Controller
      */
     public function edit(Tea $tea)
     {
-        if($tea->user_id != Auth::id()) {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+        if ($tea->user_id != Auth::id()) {
             return abort(403);
         }
-        return view('teas.edit')->with('tea', $tea);
+        return view('admin.teas.edit')->with('tea', $tea);
     }
 
     /**
@@ -113,7 +124,10 @@ class TeaController extends Controller
      */
     public function update(Request $request, Tea $tea)
     {
-        if($tea->user_id != Auth::id()) {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        if ($tea->user_id != Auth::id()) {
             return abort(403);
         }
         $request->validate([
@@ -123,12 +137,12 @@ class TeaController extends Controller
             'price' => 'required|max:15',
             'tea_img' => 'file|image',
             'location' => 'required|max:120'
-        ]);    
+        ]);
         // the bottom 4 lines of code is for adding an image
         $tea_img = $request->file('tea_img');
         $extention = $tea_img->getClientOriginalExtension();
 
-        $filename = date('d-m-Y') . '_' . $request->input('name') . '.'. $extention;
+        $filename = date('d-m-Y') . '_' . $request->input('name') . '.' . $extention;
 
         $path = $tea_img->storeAs('public/images', $filename);
         // This code updates/changes the info to whatever the user put in and saves it in the DB.
@@ -137,11 +151,11 @@ class TeaController extends Controller
             'brand' => $request->brand,
             'description' => $request->description,
             'price' => $request->price,
-            'tea_img' =>$filename,
+            'tea_img' => $filename,
             'location' => $request->location
         ]);
 
-        return to_route('teas.show', $tea)->with('success','Tea updated successfully');
+        return to_route('admin.teas.show', $tea)->with('success', 'Tea updated successfully');
     }
 
     /**
@@ -152,13 +166,15 @@ class TeaController extends Controller
      */
     public function destroy(Tea $tea)
     {
-        if($tea->user_id != Auth::id()) {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        if ($tea->user_id != Auth::id()) {
             return abort(403);
         }
         // This takes the tea and deletes it from the DB entirely
         $tea->delete();
 
-        return to_route('teas.index', $tea)->with('success','Tea deleted successfully');
-    
+        return to_route('admin.teas.index', $tea)->with('success', 'Tea deleted successfully');
     }
 }

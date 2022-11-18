@@ -11,7 +11,7 @@
                 {{session('success')}}
             </x-alert-success>
             {{-- This button takes you to the create page. A Form is loaded and connects to the DB after submission --}}
-            <a href="{{ route('teas.create') }}" class="btn-link btn-lg mb-2">+ New tea</a>
+            <a href="{{ route('admin.teas.create') }}" class="btn-link btn-lg mb-2">+ New tea</a>
             @forelse ($teas as $tea)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg flex">
                     <div class="mr-6">
@@ -21,7 +21,7 @@
                     <div>
                         <div class="flex">
                             <h2 class="font-bold text-2xl">
-                                <a href="{{ route('teas.show', $tea->uuid) }}">{{ $tea->name }}</a>
+                                <a href="{{ route('admin.teas.show', $tea->uuid) }}">{{ $tea->name }}</a>
                             </h2> 
                             <p class="ml-2 text-2xl">
                                 ·    {{$tea->brand }}

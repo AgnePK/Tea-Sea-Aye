@@ -7,9 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-alert-success>
-                {{session('success')}}
-            </x-alert-success>
             <div class="flex">
                 <p class="opacity-70">
                     <strong>Created: </strong> {{ $tea->created_at->diffForHumans() }}
@@ -18,9 +15,9 @@
                     <strong>Updated at: </strong> {{ $tea->updated_at->diffForHumans() }}
                 </p>
                 {{-- The button below takes you to the edit page.  --}}
-                <a href="{{ route('teas.edit', $tea) }}" class="btn-link ml-auto">Edit tea</a>
+                {{-- <a href="{{ route('user.teas.edit', $tea) }}" class="btn-link ml-auto">Edit tea</a> --}}
                 {{-- It goes to the TeaController and calls all the functions. --}}
-                <form action="{{ route('teas.destroy', $tea) }}" method="post">
+                <form action="{{ route('user.teas.destroy', $tea) }}" method="post">
                     @method('delete')
                     @csrf
                     <button type="submit" class="btn btn-danger ml-4" onclick="return confirm('Are you sure you wish to delete this tea?')">Delete tea</button>
