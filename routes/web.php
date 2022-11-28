@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\TeaController as AdminTeaController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\TeaController as UserTeaController;
 use Database\Seeders\TeaSeeder;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 //makes routes automatically for all pages
-Route::resource('/teas', TeaController::class)->middleware(['auth']);
+Route::resource('/home', HomeController::class)->middleware(['auth']);
 
 
 

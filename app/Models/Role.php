@@ -12,6 +12,6 @@ class Role extends Model
     //lets us get specific roles and show all the users
     public function users()
         {
-            return $this->belongToMany('App\Model\User', 'user_role');
+            return $this->belongToMany('App\Models\User', 'user_role');
         }
 }

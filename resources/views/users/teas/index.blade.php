@@ -21,7 +21,7 @@
                     <div>
                         <div class="flex">
                             <h2 class="font-bold text-2xl">
-                                <a href="{{ route('user.teas.show', $tea->uuid) }}">{{ $tea->name }}</a>
+                                <a href="{{ route('user.teas.show',  bgtea->uuid) }}">{{ $tea->name }}</a>
                             </h2> 
                             <p class="ml-2 text-2xl">
                                 ·    {{$tea->brand }}

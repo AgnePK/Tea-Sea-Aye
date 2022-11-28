@@ -13,18 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        // my tea shop will have the following attributes. 
-        Schema::create('teas', function (Blueprint $table) {
+        Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            // $table->uuid('uuid');
             $table->string('name');
-            $table->text('description');
-            $table->decimal('price');
-            $table->string('tea_img');
-            $table->string('location');
-            // $table->foreignId('brand_id');
-            $table->foreignId('user_id')->constrained();
+            $table->string('address');
             $table->timestamps();
+            //when i migrate it says this table already exists even though it doesnt
         });
     }
 
@@ -35,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teas');
+        Schema::dropIfExists('brands');
     }
 };

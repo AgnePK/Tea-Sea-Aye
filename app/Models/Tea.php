@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Tea extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = [];
 
-    public function getRouteKeyName()
+    // public function getRouteKeyName()
+    // {
+    //     return 'uuid';
+    // }
+
+    protected $fillable = ["name", "brand", "description", "price", "tea_img", "location"];
+
+    public function brand()
     {
-        return 'uuid';
+        return $this->belongsTo(Brands::class);
     }
 }

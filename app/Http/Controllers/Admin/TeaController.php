@@ -95,7 +95,7 @@ class TeaController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
         // the uuid here is just calling each tea by their uuid instead of id, and then checks if the user is autherised.
-        $tea = Tea::where('uuid', $tea->uuid)->where('user_id', Auth::id())->firstOrFail();
+        // $tea = Tea::where('uuid', $tea->uuid)->where('user_id', Auth::id())->firstOrFail();
         return view('admin.teas.show')->with('tea', $tea);
     }
 
@@ -109,9 +109,6 @@ class TeaController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
-        if ($tea->user_id != Auth::id()) {
-            return abort(403);
-        }
         return view('admin.teas.edit')->with('tea', $tea);
     }
 
@@ -126,10 +123,7 @@ class TeaController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
-
-        if ($tea->user_id != Auth::id()) {
-            return abort(403);
-        }
+        
         $request->validate([
             'name' => 'required|max:50',
             'brand' => 'required|max:50',
@@ -169,9 +163,6 @@ class TeaController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        if ($tea->user_id != Auth::id()) {
-            return abort(403);
-        }
         // This takes the tea and deletes it from the DB entirely
         $tea->delete();
 

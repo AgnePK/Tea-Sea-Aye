@@ -18,9 +18,9 @@
                     <strong>Updated at: </strong> {{ $tea->updated_at->diffForHumans() }}
                 </p>
                 {{-- The button below takes you to the edit page.  --}}
-                <a href="{{ route('user.teas.edit', $tea) }}" class="btn-link ml-auto">Edit tea</a>
+                <a href="{{ route('admin.teas.edit', $tea) }}" class="btn-link ml-auto">Edit tea</a>
                 {{-- It goes to the TeaController and calls all the functions. --}}
-                <form action="{{ route('user.teas.destroy', $tea) }}" method="post">
+                <form action="{{ route('admin.teas.destroy', $tea) }}" method="post">
                     @method('delete')
                     @csrf
                     <button type="submit" class="btn btn-danger ml-4" onclick="return confirm('Are you sure you wish to delete this tea?')">Delete tea</button>

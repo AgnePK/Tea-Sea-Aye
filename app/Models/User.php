@@ -58,6 +58,7 @@ class User extends Authenticatable
         abort(401, 'This action is unauthorized');
     }
 
+    // why is this the only singular role?
     public function hasRole($role)
     {
         return null !== $this->roles()->where('name', $role)->first();
