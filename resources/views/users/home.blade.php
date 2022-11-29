@@ -15,7 +15,7 @@
                     @endif
 
                    You are logged in as an Ordinary user!
-                   <a href="{{ route('user.teas.index')}}"> View All Teas</a>
+                   <a href="{{ route('users.teas.index')}}"> View All Teas</a>
                 </div>
             </div>
         </div>

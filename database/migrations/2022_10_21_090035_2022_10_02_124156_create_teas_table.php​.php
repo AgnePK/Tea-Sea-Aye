@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('tea_img');
             $table->string('location');
             // $table->foreignId('brand_id');
-            $table->foreignId('user_id')->constrained();
+            // $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

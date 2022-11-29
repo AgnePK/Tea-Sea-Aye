@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tea;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -36,8 +37,10 @@ class TeaController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
+
+        $brands = Brand::all();
         //directs click to the create.blade.php page
-        return view('admin.teas.create');
+        return view('admin.teas.create')->with('brands', $brands);
     }
 
     /**
@@ -53,7 +56,7 @@ class TeaController extends Controller
         //validating all the input fields and adding custom lengths
         $request->validate([
             'name' => 'required|max:50',
-            'brand' => 'required|max:50',
+            'brand_id' => 'required',
             'description' => 'required|max:500',
             'price' => 'required|max:15',
             'tea_img' => 'file|image',
@@ -72,12 +75,12 @@ class TeaController extends Controller
         Tea::create([
             'uuid' => Str::uuid(),
             'name' => $request->name,
-            'brand' => $request->brand,
+            'brand_id' => $request->brand_id,
             'description' => $request->description,
             'price' => $request->price,
             'tea_img' => $filename,
             'location' => $request->location,
-            'user_id' => Auth::id()
+            // 'user_id' => Auth::id()
         ]);
 
         return to_route('admin.teas.index')->with('success', 'Note created successfully');
@@ -109,7 +112,8 @@ class TeaController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
-        return view('admin.teas.edit')->with('tea', $tea);
+        $brands = Brand::all();
+        return view('admin.teas.edit')->with('tea', $tea)->with('brands', $brands);
     }
 
     /**
@@ -123,10 +127,10 @@ class TeaController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
-        
+
         $request->validate([
             'name' => 'required|max:50',
-            'brand' => 'required|max:50',
+            'brand_id' => 'required',
             'description' => 'required|max:500',
             'price' => 'required|max:15',
             'tea_img' => 'file|image',
@@ -142,7 +146,7 @@ class TeaController extends Controller
         // This code updates/changes the info to whatever the user put in and saves it in the DB.
         $tea->update([
             'name' => $request->name,
-            'brand' => $request->brand,
+            'brand_id' => $request->brand_id,
             'description' => $request->description,
             'price' => $request->price,
             'tea_img' => $filename,

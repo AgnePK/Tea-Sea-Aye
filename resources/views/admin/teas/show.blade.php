@@ -36,7 +36,8 @@
                 </div>
 
                 <div class="ml-6">
-                    <p class="mt-20 text-1xl text-gray-500"><em>Brand :</em> {{$tea->brand}}</p>
+                    <p class="mt-20 text-1xl text-gray-500"><em>Brand : </em> {{$tea->brand->name}}</p>
+                    <p class="mt-3">Brands Address:{{$tea->brand->address}}</p>
                     <p class="mt-3 whitespace-">{{$tea->description}}</p>
                     <p class="mt-3">Find us at: {{$tea->location}}</p>
                     <p class="mt-3 font-serif text-2xl">€{{$tea->price }}</p>

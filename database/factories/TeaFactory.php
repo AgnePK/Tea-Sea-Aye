@@ -23,10 +23,13 @@ class TeaFactory extends Factory
             // 'brand' => $this->faker->text(5),
             'description' => $this->faker->text(200),
             'price' => $this->faker->randomFloat(2, 10, 15), 
-            'tea_img' => "public/images/lyons_tea.jpeg",
-            'user_id'=> '1',
+            'tea_img' => "24-10-2022_lyons_tea2",
+            // 'user_id'=> '1',
             // 'location' => "dublin",
             'location' => $this->faker->text(10),
+            // 'brand_id' => $this->faker->numberBetween($min = 1, $max = 5)
+            //not working- random id not changing, hard coding not changing from 1 either.
+            'brand_id' => '2'
         ];
     }
 }

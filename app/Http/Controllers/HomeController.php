@@ -32,7 +32,22 @@ class HomeController extends Controller
             $home = 'admin.teas.index';
         }
         else if ($user->hasRole('user')){
-            $home = 'user.teas.index';
+            $home = 'users.teas.index';
+        }
+        return redirect()->route($home);
+    }
+
+    public function brandIndex(Request $request)
+    {
+
+        $user = Auth::user();
+        $home = 'home';
+
+        if($user->hasRole('admin')){
+            $home = 'admin.brands.index';
+        }
+        else if ($user->hasRole('user')){
+            $home = 'user.brands.index';
         }
         return redirect()->route($home);
     }

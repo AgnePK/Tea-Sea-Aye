@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Str;
+use Illuminate\Support\Str;
 
 
 class TeaController extends Controller
@@ -18,14 +18,14 @@ class TeaController extends Controller
      */
     public function index()
     {
-        // $user = Auth::user();
-        // $user->authorizeRoles('user');
+        $user = Auth::user();
+        $user->authorizeRoles('user');
 
         //This will show all the teas i have in the DB, it will show them by the latest update (recent first) and only show max 5 on page 1
         // $teas = Tea::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
         // dd($teas);
         $teas = Tea::paginate(5);
-        return view('user.teas.index')->with('teas', $teas);
+        return view('users.teas.index')->with('teas', $teas);
     }
 
     /**
@@ -97,7 +97,7 @@ class TeaController extends Controller
 
         // the uuid here is just calling each tea by their uuid instead of id, and then checks if the user is autherised.
         // $tea = Tea::where('uuid', $tea->uuid)->where('user_id', Auth::id())->firstOrFail();
-        return view('user.teas.show')->with('tea', $tea);
+        return view('users.teas.show')->with('tea', $tea);
     }
 
     /**

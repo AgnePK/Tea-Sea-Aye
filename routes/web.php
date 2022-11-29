@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\TeaController as AdminTeaController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\TeaController as UserTeaController;
-use Database\Seeders\TeaSeeder;
+
+use App\Http\Controllers\Admin\BrandController as AdminBrandController;
+use App\Http\Controllers\User\BrandController as UserBrandController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,15 +37,17 @@ Route::get('/dashboard', function () {
 //     return view('teas.show');
 // })->middleware(['auth', 'verified'])->name('show');
 
+//makes routes automatically for all pages
 require __DIR__ . '/auth.php';
 
-//makes routes automatically for all pages
-Route::resource('/home', HomeController::class)->middleware(['auth']);
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+Route::get('/home/brands', [App\Http\Controllers\HomeController::class, 'brandIndex'])->name('home.brand.index');
 
 
 // This will create all the routes for Tea
 Route::resource('/admin/teas', AdminTeaController::class)->middleware(['auth'])->names('admin.teas');
-
 // and the routes will only be available when a user is logged in
-Route::resource('/user/teas', UserTeaController::class)->middleware(['auth'])->names('user.teas')->only(['index', 'show']);
+Route::resource('/users/teas', UserTeaController::class)->middleware(['auth'])->names('users.teas')->only(['index', 'show']);
+
+Route::resource('/admin/brands', AdminBrandController::class)->middleware(['auth'])->names('admin.brands');
+Route::resource('/user/brands', UserBrandController::class)->middleware(['auth'])->names('user.brands')->only(['index', 'show']);

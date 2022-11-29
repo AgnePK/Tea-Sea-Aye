@@ -24,7 +24,7 @@
                                 <a href="{{ route('admin.teas.show', $tea->id) }}">{{ $tea->name }}</a>
                             </h2> 
                             <p class="ml-2 text-2xl">
-                                ·    {{$tea->brand }}
+                                ·    {{$tea->brand->name }}
                             </p>
                         </div>
                         <p class="mt-2">

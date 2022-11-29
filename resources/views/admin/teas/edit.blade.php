@@ -26,8 +26,8 @@
                     <div class="text-red-600 text-sm">{{ $message }}</div>
                     @enderror
 
-                    <p class="mt-6">Brand that makes the tea:</p>
-                    <x-text-input
+                    {{-- <p class="mt-6">Brand that makes the tea:</p> --}}
+                    {{-- <x-text-input
                         type="text"
                         name="brand"
                         field="brand"
@@ -38,7 +38,7 @@
                     </x-text-input>
                     @error('brand')
                     <div class="text-red-600 text-sm">{{ $message }}</div>
-                    @enderror
+                    @enderror --}}
 
                     <p class="mt-6">Describe the tea:</p>
                     <x-textarea
@@ -86,6 +86,18 @@
                     @error('location')
                     <div class="text-red-600 text-sm">{{ $message }}</div>
                     @enderror
+
+                    <p class="mt-6">Choose the Brand:</p>
+                    <div class="form-group">
+                        <label for="brand"></label>
+                        <select name="brand_id">
+                          @foreach ($brands as $brand)
+                            <option value="{{$brand->id}}" {{(old('brand_id', $brand->id) == $brand->id) ? "selected" : ""}}>
+                              {{$brand->name}}
+                            </option>
+                          @endforeach
+                     </select>
+                    </div>
 
                     <x-primary-button class="mt-6">Save tea</x-primary-button>
                 </form>

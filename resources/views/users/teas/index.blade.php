@@ -7,11 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            {{-- <x-alert-success>
-                {{session('success')}}
-            </x-alert-success> --}} 
-            {{-- This button takes you to the create page. A Form is loaded and connects to the DB after submission --}}
-            {{-- <a href="{{ route('user.teas.create') }}" class="btn-link btn-lg mb-2">+ New tea</a> --}}
             @forelse ($teas as $tea)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg flex">
                     <div class="mr-6">
@@ -21,10 +16,10 @@
                     <div>
                         <div class="flex">
                             <h2 class="font-bold text-2xl">
-                                <a href="{{ route('user.teas.show',  bgtea->uuid) }}">{{ $tea->name }}</a>
+                                <a href="{{ route('users.teas.show', $tea) }}">{{ $tea->name }}</a>
                             </h2> 
                             <p class="ml-2 text-2xl">
-                                ·    {{$tea->brand }}
+                                ·    {{$tea->brand->name }}
                             </p>
                         </div>
                         <p class="mt-2">
