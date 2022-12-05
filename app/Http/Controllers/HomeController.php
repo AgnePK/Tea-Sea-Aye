@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 // use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,6 +47,21 @@ class HomeController extends Controller
         }
         else if ($user->hasRole('user')){
             $home = 'user.brands.index';
+        }
+        return redirect()->route($home);
+    }
+    public function storeIndex(Request $request)
+    {
+
+        $user = Auth::user();
+        $home = 'home';
+
+        if($user->hasRole('admin')){
+            $home = 'admin.stores.index';
+        }
+        else if ($user->hasRole('user')){
+            abort(401, 'This action is unauthorized');
+            //I dont want to let the user see the Store page
         }
         return redirect()->route($home);
     }

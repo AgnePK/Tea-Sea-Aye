@@ -16,10 +16,15 @@ class Tea extends Model
     //     return 'uuid';
     // }
 
-    protected $fillable = ["name", "brand", "description", "price", "tea_img", "location"];
+    protected $fillable = ["name", "brand_id", "description", "price", "tea_img", "location"];
 
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class)->withTimestamps();
     }
 }

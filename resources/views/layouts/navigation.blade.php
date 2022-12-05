@@ -19,6 +19,10 @@
                     <x-nav-link :href="route('home.brand.index')" :active="request()->routeIs('home.brand.index')">
                         {{ __('Brands') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('home.store.index')" :active="request()->routeIs('home.store.index')">
+                        {{ __('Stores') }}
+                    </x-nav-link>
                     {{-- i added this extra button here so its easier for me to navigate back to my main teas page. --}}
                     {{-- <x-nav-link :href="route('teas.index')">
                         {{ __('Teas') }}

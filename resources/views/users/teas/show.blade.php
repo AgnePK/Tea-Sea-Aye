@@ -31,7 +31,14 @@
                     <p class="mt-3 whitespace-">{{$tea->description}}</p>
                     <p class="mt-3">Find us at: {{$tea->location}}</p>
                     <p class="mt-3 font-serif text-2xl">€{{$tea->price }}</p>
+                    
+                    <div>
+                        @foreach ($tea->stores as $store)
+                        <p class="mt-3">Store Location: {{$store->location}}<p>
+                        @endforeach
+                    </div>
                 </div>
+
             
             </div>
         </div>

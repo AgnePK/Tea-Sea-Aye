@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tea;
 use App\Models\Brand;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -23,8 +24,9 @@ class TeaController extends Controller
         $user->authorizeRoles('admin');
         //This will show all the teas i have in the DB, it will show them by the latest update (recent first) and only show max 5 on page 1
         // $teas = Tea::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
-        $teas = Tea::paginate(5);
 
+        $teas = Tea::latest('updated_at')->paginate(5);
+        // $teas = Tea::with('brand')->with('stores')->get();
         return view('admin.teas.index')->with('teas', $teas);
     }
 
@@ -39,8 +41,9 @@ class TeaController extends Controller
         $user->authorizeRoles('admin');
 
         $brands = Brand::all();
+        $stores = Store::all();
         //directs click to the create.blade.php page
-        return view('admin.teas.create')->with('brands', $brands);
+        return view('admin.teas.create')->with('brands', $brands)->with('stores', $stores);
     }
 
     /**
@@ -51,16 +54,19 @@ class TeaController extends Controller
      */
     public function store(Request $request)
     {
+        //     dd($request);
+
         $user = Auth::user();
         $user->authorizeRoles('admin');
         //validating all the input fields and adding custom lengths
         $request->validate([
             'name' => 'required|max:50',
-            'brand_id' => 'required',
             'description' => 'required|max:500',
             'price' => 'required|max:15',
             'tea_img' => 'file|image',
-            'location' => 'required|max:120'
+            'location' => 'required|max:120',
+            'brand_id' => 'required',
+            'stores' => ['required', 'exists:stores,id']
         ]);
         $tea_img = $request->file('tea_img');
         $extention = $tea_img->getClientOriginalExtension();
@@ -72,18 +78,22 @@ class TeaController extends Controller
         $path = $tea_img->storeAs('public/images', $filename);
 
         //creating (well... adding) a new tea
-        Tea::create([
-            'uuid' => Str::uuid(),
+        $tea = Tea::create([
+            //  'uuid' => Str::uuid(),
             'name' => $request->name,
-            'brand_id' => $request->brand_id,
             'description' => $request->description,
             'price' => $request->price,
             'tea_img' => $filename,
             'location' => $request->location,
+            'updated_at' => now(),
+            'created_at' => now(),
+            'brand_id' => $request->brand_id
             // 'user_id' => Auth::id()
         ]);
 
-        return to_route('admin.teas.index')->with('success', 'Note created successfully');
+        $tea->stores()->attach($request->stores);
+
+        return to_route('admin.teas.index')->with('success', 'Tea created successfully');
         // the "with" part makes a pop up notification to alert the user that they have successfully created a tea. 
     }
 
@@ -99,7 +109,8 @@ class TeaController extends Controller
         $user->authorizeRoles('admin');
         // the uuid here is just calling each tea by their uuid instead of id, and then checks if the user is autherised.
         // $tea = Tea::where('uuid', $tea->uuid)->where('user_id', Auth::id())->firstOrFail();
-        return view('admin.teas.show')->with('tea', $tea);
+        $teas = Tea::with('brand')->with('stores')->get();
+        return view('admin.teas.show')->with('tea', $tea)->with('teas', $teas);
     }
 
     /**

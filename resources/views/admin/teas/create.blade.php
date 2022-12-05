@@ -86,9 +86,8 @@
                     <div class="text-red-600 text-sm">{{ $message }}</div>
                     @enderror
 
-                    <p class="mt-6">Choose the Brand:</p>
-                    <div class="form-group">
-                        <label for="brand"></label>
+                    <div class="form-group mt-5">
+                        <label for="brand"><strong>Choose Brand</strong><br></label>
                         <select name="brand_id">
                           @foreach ($brands as $brand)
                             <option value="{{$brand->id}}" {{(old('brand_id') == $brand->id) ? "selected" : ""}}>
@@ -96,6 +95,14 @@
                             </option>
                           @endforeach
                      </select>
+                    </div>
+
+                    <div class="form-group mt-5 ">
+                        <label for="stores"> <strong>Choose Stores</strong> <br> </label>
+                        @foreach ($stores as $store)
+                            <input type="checkbox", value="{{$store->id}}" name="stores[]">
+                           {{$store->name}}    <br>
+                        @endforeach
                     </div>
 
                     <x-primary-button class="mt-6">Save Tea</x-primary-button>

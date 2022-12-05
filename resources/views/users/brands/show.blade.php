@@ -27,8 +27,11 @@
                 <div class="ml-6">
                     <p class="mt-3">ID : {{$brand->id}}</p>
                     <p class="mt-3">Brands Address : {{$brand->address}}</p>
-                    {{-- <p class="mt-3">Our Teas : {{$brands->teas->name}}</p> --}}
+                    @foreach ($teas as $tea)
+                    <p class="mt-3">Our Teas : {{$tea->name}}</p>
+                    @endforeach
                 </div>
+
                 
             </div>
 

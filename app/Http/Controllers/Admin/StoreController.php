@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tea;
 use App\Models\Brand;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class BrandController extends Controller
+class StoreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +21,9 @@ class BrandController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
-        $brands = Brand::latest('updated_at')->paginate(2);
-        return view('admin.brands.index')->with('brands', $brands);
+
+        $stores = Store::latest('updated_at')->paginate(2);
+        return view('admin.stores.index')->with('stores', $stores);
     }
 
     /**
@@ -31,7 +33,12 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $teas = Tea::all();
+        //directs click to the create.blade.php page
+        return view('admin.stores.create')->with('teas', $teas);
     }
 
     /**
@@ -42,24 +49,25 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        // $user = Auth::user();
-        // $user->authorizeRoles('admin');
-        // //validating all the input fields and adding custom lengths
-        // $request->validate([
-        //     'name' => 'required|max:50',
-        //     'address' => 'required|max:250',
-        //     'teas' => ['required', 'exists:teas,id']
-        // ]);
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
 
-        // //creating (well... adding) a new brand
-        // $brand = Brand::create([
-        //     'name' => $request->name,
-        //     'address' => $request->address
-        // ]);
+        $request->validate([
+            'name' => 'required|max:50',
+            'location' => 'required|max:250',
+            'teas' => ['required', 'exists:teas,id']
+            // 'brands' => ['required', 'exists:brands,id'],
+        ]);
 
-        // $brand->teas()->attach($request->teas);
+        $store = Store::create([
+            'name' => $request->name,
+            'location' => $request->location
+        ]);
 
-        // return to_route('admin.brands.index')->with('success', 'Brand created successfully');
+        $store->teas()->attach($request->teas);
+        // $store->brands()->attach($request->brands);
+
+        return to_route('admin.stores.index')->with('success', 'Store created successfully');
     }
 
     /**
@@ -68,13 +76,17 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Store $store)
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $teas = Tea::where('brand_id', '=', $brand->id)->get();
-        return view('admin.brands.show')->with('brand', $brand)->with('teas', $teas);
+        $stores = Store::with('teas')->get();
+        // $teas = Tea::where('store_id', '=', $store->id)->get();
+        // $stores = Store::where('tea_id', '=', $tea->id)->get();
+        // $stores = Store::where('teas_id' "=" 'stores_id');
+
+        return view('admin.stores.show')->with('store', $store)->with('stores', $stores);
     }
 
     /**
@@ -83,12 +95,11 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brand $brand)
+    public function edit(Store $store)
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
-        $teas = Tea::all();
-        return view('admin.brands.edit')->with('brand', $brand)->with('teas', $teas);
+        return view('admin.stores.edit')->with('store', $store);
     }
 
     /**
@@ -98,24 +109,23 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, Store $store)
     {
-
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
         $request->validate([
             'name' => 'required|max:50',
-            'address' => 'required|max:250',
+            'location' => 'required|max:250',
         ]);
 
         // This code updates/changes the info to whatever the user put in and saves it in the DB.
-        $brand->update([
+        $store->update([
             'name' => $request->name,
-            'address' => $request->address
+            'location' => $request->location
         ]);
 
-        return to_route('admin.brands.show', $brand)->with('success', 'Brand updated successfully');
+        return to_route('admin.stores.show', $store)->with('success', 'Store updated successfully');
     }
 
     /**
@@ -124,14 +134,13 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Store $store)
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        // This takes the tea and deletes it from the DB entirely
-        $brand->delete();
+        $store->delete();
 
-        return to_route('admin.brands.index', $brand)->with('success', 'brand deleted successfully');
+        return to_route('admin.stores.index', $store)->with('success', 'store deleted successfully');
     }
 }

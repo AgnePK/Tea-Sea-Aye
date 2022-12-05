@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(TeaSeeder::class);
         $this->call(BrandSeeder::class);
         //fixed db: delete the entire db. migrate teas+role+user then seed one by one
+        $this->call(BrandSeeder::class);
+        $this->call(StoreSeeder::class);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Brand;
+use App\Models\Tea;
 
 
 
@@ -20,7 +21,7 @@ class BrandController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('user');
-        $brands = Brand::paginate(2);
+        $brands = Brand::latest('updated_at')->paginate(2);
         return view('users.brands.index')->with('brands', $brands);
     }
 
@@ -56,7 +57,9 @@ class BrandController extends Controller
         if (!Auth::id()) {
             return abort(403);
         }
-        return view('users.brands.show')->with('brand', $brand);
+
+        $teas = Tea::where('brand_id', '=', $brand->id)->get();
+        return view('users.brands.show')->with('brand', $brand)->with('teas', $teas);
     }
 
     /**

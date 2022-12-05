@@ -24,7 +24,7 @@ class TeaController extends Controller
         //This will show all the teas i have in the DB, it will show them by the latest update (recent first) and only show max 5 on page 1
         // $teas = Tea::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
         // dd($teas);
-        $teas = Tea::paginate(5);
+        $teas = Tea::latest('updated_at')->paginate(5);
         return view('users.teas.index')->with('teas', $teas);
     }
 
@@ -77,7 +77,7 @@ class TeaController extends Controller
         //     'user_id' => Auth::id()
         // ]);
 
-        // return to_route('teas.index')->with('success','Note created successfully');
+        // return to_route('teas.index')->with('success','Tea created successfully');
         // the "with" part makes a pop up notification to alert the user that they have successfully created a tea. 
     }
 
@@ -97,7 +97,9 @@ class TeaController extends Controller
 
         // the uuid here is just calling each tea by their uuid instead of id, and then checks if the user is autherised.
         // $tea = Tea::where('uuid', $tea->uuid)->where('user_id', Auth::id())->firstOrFail();
-        return view('users.teas.show')->with('tea', $tea);
+        $teas = Tea::with('brand')->with('stores')->get();
+
+        return view('users.teas.show')->with('tea', $tea)->with('teas', $teas);
     }
 
     /**
