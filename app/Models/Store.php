@@ -12,6 +12,7 @@ class Store extends Model
     protected $fillable = ['name', 'location'];
 
 
+    //this stores function says that each tea can be in many stores. many stores have many teas. its N:M
     public function teas()
     {
         return $this->belongsToMany(Tea::class)->withTimeStamps();

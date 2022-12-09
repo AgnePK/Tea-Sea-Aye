@@ -139,8 +139,8 @@ class StoreController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $store->delete();
+        //Store cant be deleted because the teas use them.
 
-        return to_route('admin.stores.index', $store)->with('success', 'store deleted successfully');
+        return to_route('admin.stores.index', $store)->with('success', 'Store could not be deleted');
     }
 }

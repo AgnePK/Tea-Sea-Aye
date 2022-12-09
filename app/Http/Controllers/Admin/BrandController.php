@@ -129,9 +129,8 @@ class BrandController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        // This takes the tea and deletes it from the DB entirely
-        $brand->delete();
+        //Brand cant be deleted because the teas and stores use them too.
 
-        return to_route('admin.brands.index', $brand)->with('success', 'brand deleted successfully');
+        return to_route('admin.brands.index', $brand)->with('success', 'Brand could not be deleted');
     }
 }

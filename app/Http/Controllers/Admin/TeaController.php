@@ -178,7 +178,6 @@ class TeaController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        // This takes the tea and deletes it from the DB entirely
         $tea->delete();
 
         return to_route('admin.teas.index', $tea)->with('success', 'Tea deleted successfully');
